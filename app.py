@@ -1,35 +1,44 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect
 import sqlite3
+import os
 
 app = Flask(__name__)
+DB_NAME = "todo.db"
 
-def get_db_connection():
-    conn = sqlite3.connect('todo.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+def init_db():
+    if not os.path.exists(DB_NAME):
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE todos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                task TEXT NOT NULL
+            )
+        ''')
+        conn.commit()
+        conn.close()
+        print("✅ todo.db を作成しました")
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
-
-@app.route('/todos', methods=['GET'])
-def get_todos():
-    conn = get_db_connection()
-    todos = conn.execute('SELECT * FROM todos').fetchall()
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM todos")
+    todos = cursor.fetchall()
     conn.close()
-    return jsonify([dict(todo) for todo in todos])
+    return render_template("index.html", todos=todos)
 
-@app.route('/todos', methods=['POST'])
-def add_todo():
-    new_task = request.json.get('task')
-    conn = get_db_connection()
-    conn.execute('INSERT INTO todos (task, done) VALUES (?, ?)', (new_task, False))
-    conn.commit()
-    conn.close()
-    return jsonify({'status': 'success'})
+@app.route("/add", methods=["POST"])
+def add():
+    task = request.form.get("task")
+    if task:
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO todos (task) VALUES (?)", (task,))
+        conn.commit()
+        conn.close()
+    return redirect("/")
 
-if __name__ == '__main__':
-    conn = sqlite3.connect('todo.db')
-    conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT NOT NULL, done BOOLEAN NOT NULL)')
-    conn.close()
+if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
