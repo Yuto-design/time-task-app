@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  php:
+    image: my_php_apache
+    working_dir: /var/www/html
+    build:
+      context: ./
+      dockerfile: Dockerfile.my_php_apache
+    tty: true
+    stdin_open: true
+    stop_signal: SIGKILL
+    restart: unless-stopped
+    environment:
+      DB_HOST: 'db'
+      DB_PORT: '3306'
+      DB_NAME: 'db1'
+      DB_USER: 'user'
+      DB_PASS: 'password123456'
+    ports:
+      - ${PORT:-8084}:80
+    volumes:
+      - ./public:/var/www/html
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password123456
+      MYSQL_DATABASE: db1
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password123456
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/migrations.sql:/docker-entrypoint-initdb.d/init.sql
+
+  myadmin:
+    image: phpmyadmin/phpmyadmin:5.1.1
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password123456
+    depends_on:
+      - db
+    ports:
+      - ${MY_ADMIN_PORT:-8085}:80
+
+volumes:
+  db-data:
