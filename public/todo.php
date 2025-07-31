@@ -38,23 +38,30 @@
             <input name="content" required placeholder="タスク内容" style="width:300px;" />
             <input type="date" name="due_date" />
             <select name="status">
-                <option value="0">未完了</option>
-                <option value="1">対応中</option>
-                <option value="2">完了</option>
+                <div class="status-1"><option value="0">未完了</option></div>
+                <div class="status-2"><option value="1">対応中</option></div>
+                <div class="status-3"><option value="2">完了</option></div>
             </select>
             <button>追加</button>
         </form>
 
-        <ul>
-        <?php foreach ($todos as $todo): ?>
-            <?php $status = $todo['status'] ?? 0; ?>
-            <li>
-                <?= htmlspecialchars($todo['content']) ?> - <?= htmlspecialchars($todo['due_date']) ?: '期限なし' ?>
-                [<?= statusLabel($status) ?>]
-                <a href="./function/edit.php?id=<?= $todo['id'] ?>">編集</a>
-                <a href="./function/delete.php?id=<?= $todo['id'] ?>" onclick="return confirm('削除しますか？')">削除</a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
+        <div class="todo-card">
+            <ul>
+                <?php foreach ($todos as $todo): ?>
+                    <?php $status = $todo['status'] ?? 0; ?>
+                    <li>
+                        <div class="task-info">
+                            <div class="task-content"><?= htmlspecialchars($todo['content']) ?></div>
+                            <div class="task-due"><?= htmlspecialchars($todo['due_date']) ?: '期限なし' ?></div>
+                        </div>
+                        <div class="status status-<?= $status ?>"><?= statusLabel($status) ?></div>
+                        <div class="actions">
+                            <div class="edit-button"><a href="./function/edit.php?id=<?= $todo['id'] ?>">編集</a></div>
+                            <div class="delete-button"><a href="./function/delete.php?id=<?= $todo['id'] ?>" onclick="return confirm('削除しますか？')">削除</a></div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </body>
 </html>
