@@ -4,7 +4,6 @@
         <title>Time Tracker</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- CSSはlinkで読み込む（PHP includeしない） -->
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>

@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS todos (
     content TEXT NOT NULL,
     due_date DATE,
     is_done BOOLEAN DEFAULT FALSE,
+    status INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
