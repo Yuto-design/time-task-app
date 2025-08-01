@@ -258,6 +258,38 @@ a.back:hover {
     text-align: center;
 }
 
+.habit-graph {
+    max-width: 700px;
+    height: 400px;
+    margin: 40px auto;
+    padding: 60px 20px 20px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.habit-graph h2 {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    margin: 0;
+    font-size: 18px;
+    z-index: 2;
+    background-color: #fafafa;
+    padding: 4px 8px;
+}
+
+.habit-graph canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+}
+
 progress {
     width: 100%;
     height: 20px;
