@@ -22,10 +22,10 @@
             2 => '完了',
         ][$status] ?? '不明';
     }
-    ?>
+?>
 
-    <!DOCTYPE html>
-    <html lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
     <head>
         <meta charset="UTF-8" />
         <title>ToDoリスト</title>
@@ -34,18 +34,20 @@
     <body>
         <h1>ToDoリスト</h1>
 
-        <form method="POST" style="margin-bottom:20px;">
-            <input name="content" required placeholder="タスク内容" style="width:300px;" />
-            <input type="date" name="due_date" />
-            <select name="status">
-                <div class="status-1"><option value="0">未完了</option></div>
-                <div class="status-2"><option value="1">対応中</option></div>
-                <div class="status-3"><option value="2">完了</option></div>
-            </select>
-            <button>追加</button>
-        </form>
+        <div class="todo-add">
+            <form method="POST">
+                <input name="content" class="content"  placeholder="タスク内容"/>
+                <input type="date" name="due_date" class="date" />
+                <select name="status" class="status">
+                    <div class="status-1"><option value="0">未完了</option></div>
+                    <div class="status-2"><option value="1">対応中</option></div>
+                    <div class="status-3"><option value="2">完了</option></div>
+                </select>
+                <button>追加</button>
+            </form>
+        </div>
 
-        <div class="todo-card">
+        <div class="todo-list">
             <ul>
                 <?php foreach ($todos as $todo): ?>
                     <?php $status = $todo['status'] ?? 0; ?>
@@ -63,5 +65,6 @@
                 <?php endforeach; ?>
             </ul>
         </div>
+        <a href="./index.php" class="back">戻る</a>
     </body>
 </html>

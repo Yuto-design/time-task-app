@@ -25,15 +25,18 @@
     $todo = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<h1>ToDo 編集</h1>
-<form method="POST">
-    <input name="content" value="<?= htmlspecialchars($todo['content']) ?>" required>
-    <input type="date" name="due_date" value="<?= $todo['due_date'] ?>">
-    <select name="status">
-        <option value="0" <?= $todo['status'] == 0 ? 'selected' : '' ?>>未完了</option>
-        <option value="1" <?= $todo['status'] == 1 ? 'selected' : '' ?>>対応中</option>
-        <option value="2" <?= $todo['status'] == 2 ? 'selected' : '' ?>>完了</option>
-    </select>
-    <button>更新</button>
-</form>
-<a href="../todo.php">戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+    <h1>ToDo 編集</h1>
+    <form method="POST">
+        <input name="content" value="<?= htmlspecialchars($todo['content']) ?>" required>
+        <input type="date" name="due_date" value="<?= $todo['due_date'] ?>">
+        <select name="status">
+            <option value="0" <?= $todo['status'] == 0 ? 'selected' : '' ?>>未完了</option>
+            <option value="1" <?= $todo['status'] == 1 ? 'selected' : '' ?>>対応中</option>
+            <option value="2" <?= $todo['status'] == 2 ? 'selected' : '' ?>>完了</option>
+        </select>
+        <button>更新</button>
+    </form>
+    <a href="../todo.php" class="back">戻る</a>
+</html>
