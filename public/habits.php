@@ -56,12 +56,10 @@
         ];
     }
 
-    // 今日の達成率を計算（修正箇所）
     $totalHabits = count($habits);
     $doneToday = count($checked_ids);
     $averageRate = $totalHabits > 0 ? round(($doneToday / $totalHabits) * 100, 1) : 0;
 
-    // 過去7日間の日別平均達成率はそのまま
     $dailyAverageRates = [];
     foreach ($dates as $date) {
         $dailyAverageRates[] = $totalHabits > 0 ? round(($dailyRates[$date] / $totalHabits) * 100, 1) : 0;
