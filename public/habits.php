@@ -56,20 +56,13 @@
         ];
     }
 
-    $habitRates = [];
-    foreach ($habitStatuses as $habit) {
-        $totalDays = count($habit['status']);
-        $completedDays = array_sum($habit['status']);
-        $rate = round(($completedDays / $totalDays) * 100, 1);
-        $habitRates[] = [
-            'name' => $habit['name'],
-            'rate' => $rate
-        ];
-    }
-
-    $averageRate = count($habitRates) > 0 ? round(array_sum(array_column($habitRates, 'rate')) / count($habitRates), 1) : 0;
-    $dailyAverageRates = [];
+    // 今日の達成率を計算（修正箇所）
     $totalHabits = count($habits);
+    $doneToday = count($checked_ids);
+    $averageRate = $totalHabits > 0 ? round(($doneToday / $totalHabits) * 100, 1) : 0;
+
+    // 過去7日間の日別平均達成率はそのまま
+    $dailyAverageRates = [];
     foreach ($dates as $date) {
         $dailyAverageRates[] = $totalHabits > 0 ? round(($dailyRates[$date] / $totalHabits) * 100, 1) : 0;
     }
@@ -114,14 +107,16 @@
             <p><?= $done ?> / <?= $total ?> 達成</p>
         </div>
 
-        <div class="habit-summary-chart">
-            <h2>全体の達成率</h2>
-            <canvas id="summaryChart"></canvas>
-        </div>
+        <div class="habit-chart-container">
+            <div class="habit-summary-chart">
+                <h2 style="text-align:center;">本日の達成率</h2>
+                <canvas id="summaryChart"></canvas>
+            </div>
 
-        <div class="habit-daily-chart">
-            <h2>日別平均達成率</h2>
-            <canvas id="dailyChart"></canvas>
+            <div class="habit-daily-chart">
+                <h2 style="text-align:center;">日別平均達成率</h2>
+                <canvas id="dailyChart"></canvas>
+            </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
