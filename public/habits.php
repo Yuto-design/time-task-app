@@ -37,6 +37,7 @@
     }
 
     $habitStatuses = [];
+    $dailyRates = array_fill_keys($dates, 0);
     foreach ($habits as $habit) {
         $stmt = $dbh->prepare("SELECT log_date FROM habit_logs WHERE habit_id = ? AND log_date BETWEEN ? AND ?");
         $stmt->execute([$habit['id'], $dates[0], $dates[6]]);
@@ -44,13 +45,33 @@
 
         $dailyStatus = [];
         foreach ($dates as $date) {
-            $dailyStatus[] = in_array($date, $logs) ? 1 : 0;
+            $hit = in_array($date, $logs) ? 1 : 0;
+            $dailyStatus[] = $hit;
+            $dailyRates[$date] += $hit;
         }
 
         $habitStatuses[] = [
             'name' => $habit['name'],
             'status' => $dailyStatus
         ];
+    }
+
+    $habitRates = [];
+    foreach ($habitStatuses as $habit) {
+        $totalDays = count($habit['status']);
+        $completedDays = array_sum($habit['status']);
+        $rate = round(($completedDays / $totalDays) * 100, 1);
+        $habitRates[] = [
+            'name' => $habit['name'],
+            'rate' => $rate
+        ];
+    }
+
+    $averageRate = count($habitRates) > 0 ? round(array_sum(array_column($habitRates, 'rate')) / count($habitRates), 1) : 0;
+    $dailyAverageRates = [];
+    $totalHabits = count($habits);
+    foreach ($dates as $date) {
+        $dailyAverageRates[] = $totalHabits > 0 ? round(($dailyRates[$date] / $totalHabits) * 100, 1) : 0;
     }
 ?>
 
@@ -93,38 +114,61 @@
             <p><?= $done ?> / <?= $total ?> 達成</p>
         </div>
 
-        <div class="habit-graph">
-            <h2>過去7日間の達成状況</h2>
-            <canvas id="habitChart"></canvas>
+        <div class="habit-summary-chart">
+            <h2>全体の達成率</h2>
+            <canvas id="summaryChart"></canvas>
         </div>
 
-        <script>
-            window.chartData = <?= json_encode([
-                'labels' => $dates,
-                'datasets' => array_map(function($habit) {
-                    return [
-                        'label' => $habit['name'],
-                        'data' => $habit['status'],
-                        'fill' => false,
-                        'borderColor' => '#' . substr(md5($habit['name']), 0, 6),
-                        'tension' => 0.3,
-                        'pointRadius' => 5,
-                        'pointHoverRadius' => 7,
-                    ];
-                }, $habitStatuses)
-            ]); ?>;
+        <div class="habit-daily-chart">
+            <h2>日別平均達成率</h2>
+            <canvas id="dailyChart"></canvas>
+        </div>
 
-            window.chartConfig = {
-                type: 'line',
-                data: window.chartData,
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctxSummary = document.getElementById('summaryChart').getContext('2d');
+            new Chart(ctxSummary, {
+                type: 'doughnut',
+                data: {
+                    labels: ['達成率', '未達成率'],
+                    datasets: [{
+                        data: [<?= $averageRate ?>, <?= 100 - $averageRate ?>],
+                        backgroundColor: ['#2ecc71', '#ecf0f1'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `${ctx.label}: ${ctx.raw}%`
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            const ctxDaily = document.getElementById('dailyChart').getContext('2d');
+            new Chart(ctxDaily, {
+                type: 'bar',
+                data: {
+                    labels: <?= json_encode($dates) ?>,
+                    datasets: [{
+                        label: '日別平均達成率',
+                        data: <?= json_encode($dailyAverageRates) ?>,
+                        backgroundColor: '#9b59b6'
+                    }]
+                },
                 options: {
                     scales: {
                         y: {
-                            min: 0,
-                            max: 1,
+                            beginAtZero: true,
+                            max: 100,
                             ticks: {
-                                stepSize: 0.2,
-                                callback: value => (value * 100) + '%'
+                                callback: value => value + '%'
                             },
                             title: {
                                 display: true,
@@ -139,23 +183,19 @@
                         }
                     },
                     plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        },
+                        legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                label: context => context.parsed.y ? '達成' : '未達成'
+                                label: ctx => `${ctx.raw}% 達成`
                             }
                         }
                     },
                     responsive: true,
                     maintainAspectRatio: false,
                 }
-            };
+            });
         </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="notify.js"></script>
+        <a href="./index.php" class="back">戻る</a>
     </body>
 </html>

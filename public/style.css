@@ -6,7 +6,7 @@ body {
     padding: 40px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
     margin: 20px 0;
     color: #2c3e50;
@@ -56,6 +56,8 @@ a.back:hover {
     background-color: #d5d5d5;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+/* Todo */
 
 .todo-add {
     background: #fff;
@@ -201,6 +203,8 @@ a.back:hover {
     background-color: #c62828;
 }
 
+/* Habits */
+
 .habit-form {
     display: flex;
     justify-content: center;
@@ -253,16 +257,17 @@ a.back:hover {
 }
 
 .habit-progress {
-    max-width: 400px;
+    max-width: 800px;
     margin: 30px auto;
     text-align: center;
 }
 
-.habit-graph {
+.habit-summary-chart,
+.habit-daily-chart {
     max-width: 700px;
     height: 400px;
-    margin: 40px auto;
-    padding: 60px 20px 20px;
+    margin: 20px auto;
+    padding: 40px 20px 20px;
     background-color: #fafafa;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -270,29 +275,12 @@ a.back:hover {
     position: relative;
 }
 
-.habit-graph h2 {
-    position: absolute;
-    top: 0;
-    left: 50px;
-    margin: 0;
-    font-size: 18px;
-    z-index: 2;
-    background-color: #fafafa;
-    padding: 4px 8px;
-}
-
-.habit-graph canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 1;
-}
-
-progress {
-    width: 100%;
-    height: 20px;
+.habit-summary-chart canvas,
+.habit-daily-chart canvas {
+    width: 80% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
 }
 
 @media (max-width: 600px) {
