@@ -32,51 +32,22 @@
         <meta charset="UTF-8">
         <title>Pomodoro タイマー</title>
         <link rel="stylesheet" href="style.css">
-        <style>
-            .timer-container {
-                text-align: center;
-                margin: 40px auto;
-            }
-
-            .timer-display {
-                font-size: 48px;
-                font-weight: bold;
-                margin: 20px 0;
-            }
-
-            .graph-box {
-                max-width: 700px;
-                margin: 50px auto;
-                background: #f9f9f9;
-                padding: 20px;
-                border-radius: 12px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-
-            canvas {
-                width: 100% !important;
-                height: 400px !important;
-            }
-
-            button {
-                padding: 10px 20px;
-                font-size: 16px;
-                margin: 10px;
-            }
-
-            .back {
-                display: inline-block;
-                margin-top: 40px;
-                background-color: #ddd;
-                padding: 8px 16px;
-                border-radius: 8px;
-                text-decoration: none;
-            }
-        </style>
     </head>
     <body>
 
         <h1>Pomodoro タイマー</h1>
+
+        <form id="timeSettings" onsubmit="applyCustomTime(event)">
+            <label>
+                作業時間（分）:
+                <input type="number" id="workMinutes" value="25" min="1" required>
+            </label>
+            <label>
+                休憩時間（分）:
+                <input type="number" id="breakMinutes" value="5" min="1" required>
+            </label>
+            <button type="submit">時間を設定</button>
+        </form>
 
         <div class="timer-container">
             <div class="timer-display" id="timer">25:00</div>

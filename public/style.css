@@ -295,6 +295,28 @@ a.back:hover {
     margin: 0 auto;
 }
 
+/* Pomodoro Timer */
+
+.timer-container {
+    text-align: center;
+    margin: 40px auto;
+}
+
+.timer-display {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.graph-box {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 @media (max-width: 600px) {
     nav {
         flex-direction: column;

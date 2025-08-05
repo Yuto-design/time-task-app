@@ -98,6 +98,9 @@ let seconds = 25 * 60;
 let phase = 'work';
 let timerInterval;
 
+let customWorkMinutes = 25;
+let customBreakMinutes = 5;
+
 function updateDisplay() {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
@@ -125,12 +128,12 @@ function startTimer() {
 
                 if (phase === 'work') {
                     phase = 'break';
-                    seconds = 5 * 60;
+                    seconds = customBreakMinutes * 60;
                     document.getElementById('phase-label').textContent = '休憩フェーズ';
-                    alert("25分完了！休憩しましょう。");
+                    alert("作業終了！休憩しましょう。");
                 } else {
                     phase = 'work';
-                    seconds = 25 * 60;
+                    seconds = customWorkMinutes * 60;
                     document.getElementById('phase-label').textContent = '作業フェーズ';
                     alert("休憩終了！再開しましょう。");
                 }
@@ -146,42 +149,22 @@ function togglePause() {
     pauseBtn.textContent = isPaused ? '再開' : '一時停止';
 }
 
-updateDisplay();
+function applyCustomTime(event) {
+    event.preventDefault();
+    const workInput = document.getElementById('workMinutes').value;
+    const breakInput = document.getElementById('breakMinutes').value;
 
-function renderSessionChart(labels, counts) {
-    const ctx = document.getElementById('sessionChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'セッション数',
-                data: counts,
-                backgroundColor: '#3498db'
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 1,
-                    title: {
-                        display: true,
-                        text: 'セッション数'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: '日付'
-                    }
-                }
-            },
-            plugins: {
-                legend: { display: false }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-        }
-    });
+    customWorkMinutes = parseInt(workInput);
+    customBreakMinutes = parseInt(breakInput);
+
+    phase = 'work';
+    seconds = customWorkMinutes * 60;
+    isRunning = false;
+    isPaused = false;
+    clearInterval(timerInterval);
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('pauseBtn').style.display = 'none';
+    document.getElementById('pauseBtn').textContent = '一時停止';
+    document.getElementById('phase-label').textContent = '作業フェーズ';
+    updateDisplay();
 }
