@@ -108,87 +108,19 @@
         <div class="habit-chart-container">
             <div class="habit-summary-chart">
                 <h2 style="text-align:center;">本日の達成率</h2>
-                <canvas id="summaryChart"></canvas>
+                <canvas id="summaryChart" data-rate="<?= $averageRate ?>"></canvas>
             </div>
 
             <div class="habit-daily-chart">
                 <h2 style="text-align:center;">日別平均達成率</h2>
-                <canvas id="dailyChart"></canvas>
+                <canvas id="dailyChart" data-labels='<?= json_encode($dates) ?>' data-data='<?= json_encode($dailyAverageRates) ?>'></canvas>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            const ctxSummary = document.getElementById('summaryChart').getContext('2d');
-            new Chart(ctxSummary, {
-                type: 'doughnut',
-                data: {
-                    labels: ['達成率', '未達成率'],
-                    datasets: [{
-                        data: [<?= $averageRate ?>, <?= 100 - $averageRate ?>],
-                        backgroundColor: ['#2ecc71', '#ecf0f1'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                label: ctx => `${ctx.label}: ${ctx.raw}%`
-                            }
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
-            });
-
-            const ctxDaily = document.getElementById('dailyChart').getContext('2d');
-            new Chart(ctxDaily, {
-                type: 'bar',
-                data: {
-                    labels: <?= json_encode($dates) ?>,
-                    datasets: [{
-                        label: '日別平均達成率',
-                        data: <?= json_encode($dailyAverageRates) ?>,
-                        backgroundColor: '#9b59b6'
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: value => value + '%'
-                            },
-                            title: {
-                                display: true,
-                                text: '達成率(%)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '日付'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: ctx => `${ctx.raw}% 達成`
-                            }
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
-            });
-        </script>
-
         <a href="./index.php" class="back">戻る</a>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="notify.js"></script>
+
     </body>
 </html>
