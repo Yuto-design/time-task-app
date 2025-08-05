@@ -56,7 +56,6 @@
             <form id="logForm" method="POST" style="display: inline;">
                 <button type="submit">セッション記録</button>
             </form>
-            <div id="phase-label">作業フェーズ</div>
         </div>
 
         <div class="graph-box">
@@ -68,13 +67,13 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const sessionLabels = <?= json_encode($labels) ?>;
-            const sessionCounts = <?= json_encode($counts) ?>;
+            const graphLabels = <?= json_encode($labels, JSON_UNESCAPED_UNICODE) ?>;
+            const graphCounts = <?= json_encode($counts) ?>;
         </script>
-        <script src="notify.js"></script>
         <script>
             renderSessionChart(sessionLabels, sessionCounts);
         </script>
 
+        <script src="notify.js"></script>
     </body>
 </html>

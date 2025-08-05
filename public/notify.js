@@ -168,3 +168,40 @@ function applyCustomTime(event) {
     document.getElementById('phase-label').textContent = '作業フェーズ';
     updateDisplay();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById('sessionChart')?.getContext('2d');
+    if (!ctx || typeof graphLabels === 'undefined' || typeof graphCounts === 'undefined') return;
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: graphLabels,
+            datasets: [{
+                label: 'セッション数',
+                data: graphCounts,
+                backgroundColor: '#3498db'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => `${ctx.raw} セッション`
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+});

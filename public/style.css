@@ -297,24 +297,147 @@ a.back:hover {
 
 /* Pomodoro Timer */
 
+#timeSettings {
+    max-width: 350px;
+    margin: 0 auto 30px auto;
+    background-color: #ffffff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#timeSettings label {
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    min-width: 120px;
+}
+
+#timeSettings input[type="number"] {
+    margin-top: 6px;
+    padding: 8px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#timeSettings input[type="number"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+#timeSettings button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(52,152,219,0.4);
+    transition: background-color 0.3s ease;
+    align-self: flex-end;
+}
+
+#timeSettings button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
 .timer-container {
     text-align: center;
-    margin: 40px auto;
+    margin-bottom: 40px;
+    background: #ffffff;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .timer-display {
-    font-size: 48px;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-family: "Courier New", Courier, monospace;
+}
+
+button#startBtn, button#pauseBtn {
+    font-size: 18px;
+    padding: 10px 24px;
+    margin: 0 10px 20px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #2ecc71;
+    color: white;
+    box-shadow: 0 3px 6px rgba(46,204,113,0.4);
+    transition: background-color 0.3s ease;
+}
+
+button#startBtn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+button#startBtn:hover:not(:disabled),
+button#pauseBtn:hover {
+    background-color: #27ae60;
+}
+
+form#logForm button {
+    background-color: #3498db;
+    padding: 10px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 3px 6px rgba(52,152,219,0.4);
+    transition: background-color 0.3s ease;
+}
+
+form#logForm button:hover {
+    background-color: #2980b9;
+}
+
+#phase-label {
     font-weight: bold;
-    margin: 20px 0;
+    font-size: 18px;
+    color: #e67e22;
+    margin-top: 10px;
 }
 
 .graph-box {
     max-width: 700px;
-    margin: 50px auto;
-    background: #f9f9f9;
-    padding: 20px;
+    margin: 0 auto 60px auto;
+    background-color: #ffffff;
+    padding: 25px 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.graph-box h2 {
+    margin-bottom: 20px;
+    color: #34495e;
+    text-align: center;
+}
+
+canvas#sessionChart {
+    width: 100% !important;
+    height: 400px !important;
 }
 
 @media (max-width: 600px) {
