@@ -20,11 +20,25 @@
         exit;
     }
 
-    $stmt = $dbh->query("SELECT session_date, session_count FROM pomodoro_logs ORDER BY session_date DESC LIMIT 7");
-    $logs = array_reverse($stmt->fetchAll(PDO::FETCH_ASSOC));
-    $labels = array_column($logs, 'session_date');
-    $counts = array_column($logs, 'session_count');
+    $dates = [];
+    for ($i = 6; $i >= 0; $i--) {
+        $dates[] = date('Y-m-d', strtotime("-$i day"));
+    }
+
+    $sessionData = array_fill_keys($dates, 0);
+
+    $stmt = $dbh->prepare("SELECT session_date, session_count FROM pomodoro_logs WHERE session_date BETWEEN ? AND ?");
+    $stmt->execute([$dates[0], $dates[6]]);
+    $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($logs as $log) {
+        $sessionData[$log['session_date']] = (int)$log['session_count'];
+    }
+
+    $labels = array_keys($sessionData);
+    $counts = array_values($sessionData);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">

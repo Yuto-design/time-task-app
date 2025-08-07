@@ -23,6 +23,20 @@
         }
     }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+        $habit_id = (int) $_POST['delete_id'];
+
+        $stmt = $dbh->prepare("DELETE FROM habit_logs WHERE habit_id = ?");
+        $stmt->execute([$habit_id]);
+
+        $stmt = $dbh->prepare("DELETE FROM habits WHERE id = ?");
+        $stmt->execute([$habit_id]);
+
+        header("Location: habits.php");
+        exit();
+    }
+
+
     $stmt = $dbh->query("SELECT * FROM habits ORDER BY created_at DESC");
     $habits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -90,6 +104,11 @@
                             <input type="checkbox" onchange="this.form.submit()" <?= in_array($habit['id'], $checked_ids) ? 'checked' : '' ?>>
                             <?= htmlspecialchars($habit['name']) ?>
                         </label>
+                    </form>
+
+                    <form method="POST" style="display:inline;" onsubmit="return confirm('本当に削除しますか？');">
+                        <input type="hidden" name="delete_id" value="<?= $habit['id'] ?>">
+                        <button type="submit" class="delete-habit">削除</button>
                     </form>
                 </li>
             <?php endforeach; ?>
