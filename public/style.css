@@ -440,6 +440,7 @@ button.delete-habit:hover {
     height: 100%;
     display: block;
     margin: 0 auto;
+    text-align: center;
 }
 
 /* Pomodoro Timer */
@@ -587,26 +588,116 @@ canvas#sessionChart {
     height: 400px !important;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600x) {
+    body {
+        padding: 20px;
+    }
+
     nav {
         flex-direction: column;
+        align-items: center;
         gap: 12px;
+        padding: 12px;
+        max-width: 100%;
     }
 
-    h1 {
-        font-size: 28px;
+    .intro,
+    .todo-add,
+    .todo-edit,
+    .timer-container,
+    .graph-box,
+    .habit-progress {
+        margin: 20px auto;
+        padding: 16px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    .todo-add form {
+    .summary-cards {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .habit-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .habit-form input,
+    .habit-form button {
+        width: 100%;
+        max-width: 300px;
+        box-sizing: border-box;
+    }
+
+    .habit-chart-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .habit-summary-chart,
+    .habit-daily-chart {
+        width: 100%;
+        max-width: 100%;
+        height: 300px;
+    }
+
+    .todo-add form,
+    .todo-edit form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .todo-add input,
+    .todo-add select,
+    .todo-add button,
+    .todo-edit input,
+    .todo-edit select,
+    .todo-edit button {
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .todo-list li {
         flex-direction: column;
         align-items: flex-start;
+        gap: 12px;
     }
 
     .actions {
-        margin-top: 10px;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    #timeSettings {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+    }
+
+    #timeSettings label,
+    #timeSettings input,
+    #timeSettings button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button#startBtn,
+    button#pauseBtn {
+        margin: 10px auto;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    form#logForm button {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
     }
 }

@@ -131,7 +131,7 @@
             </div>
 
             <div class="habit-daily-chart">
-                <h2 style="text-align:center;">日別平均達成率</h2>
+                <h2>日別平均達成率</h2>
                 <canvas id="dailyChart" data-labels='<?= json_encode($dates) ?>' data-data='<?= json_encode($dailyAverageRates) ?>'></canvas>
             </div>
         </div>
