@@ -39,9 +39,9 @@
                 <input name="content" class="content"  placeholder="タスク内容"/>
                 <input type="date" name="due_date" class="date" />
                 <select name="status" class="status">
-                    <div class="status-1"><option value="0">未完了</option></div>
-                    <div class="status-2"><option value="1">対応中</option></div>
-                    <div class="status-3"><option value="2">完了</option></div>
+                    <option value="0">未完了</option>
+                    <option value="1">対応中</option>
+                    <option value="2">完了</option>
                 </select>
                 <button>追加</button>
             </form>
