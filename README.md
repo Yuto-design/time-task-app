@@ -62,7 +62,7 @@ time-task-app/
 ├── docker-compose.yml
 ├── Dockerfile.my_php_apache
 └── README.md
-</code</pre>
+</code></pre>
 
 ---
 
@@ -86,3 +86,4 @@ docker compose up -d
 
 **３．動作確認**
 - ブラウザで次のURLにアクセスして表示確認：http://localhost:8084
+
