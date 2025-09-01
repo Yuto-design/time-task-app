@@ -66,13 +66,15 @@ time-task-app/
 
 ---
 
-## セットアップ方法
-**１. このリポジトリをクローン**  
-   ```bash
-   git clone https://github.com/yourname/time-tracker-app.git
-   cd time-tracker-app
-**２. データベースを作成**  
-**３．開発環境の準備**  
+## セットアップ手順
+
+**１．リポジトリをクローン**
+<pre><code>
+git clone https://github.com/your-username/time-tracker-app.git
+cd time-tracker-app
+</code></pre>
+
+**２．開発環境の準備**  
 *Docker + docker-compose*
 - Docker Desktop をインストール
 - 以下のコマンドで環境を構築・起動
@@ -80,7 +82,7 @@ time-task-app/
 docker compose up -d
 </code></pre>
 - phpMyAdmin（DB管理画面）にアクセス：http://localhost:8085  
-　ログイン情報：docker-compose.ymlに記載
+　ログイン情報：`docker-compose.yml` に記載
 
-**４．動作確認**
+**３．動作確認**
 - ブラウザで次のURLにアクセスして表示確認：http://localhost:8084
