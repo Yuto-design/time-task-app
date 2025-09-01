@@ -45,3 +45,21 @@ PHP + MySQL (またはSQLite) を用いて構築されており、タスクや�
 ---
 
 ## ディレクトリ構成
+<pre><code>
+time-task-app/
+├── public/
+        ├── index.php            # ホーム画面
+        ├── todo.php             # ToDoリスト
+        ├── habits.php           # 習慣トラッカー
+        ├── pomodoro.php         # Pomodoroタイマー
+        ├── db.php
+        ├── info.php
+        ├── notify.js
+        ├── style.css
+        └── function/
+                ├── edit.php     # ToDo編集処理
+                └── delete.php   # ToDo削除処理
+├── docker-compose.yml
+├── Dockerfile.my_php_apache
+└── README.md
+</code</pre>
