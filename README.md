@@ -1,4 +1,4 @@
-# 自己管理アプリ
+# Time Task App
 
 ## 概要
 **Time Task App** は、毎日の **タスク管理 (ToDo)**・**習慣形成 (Habits)**・**集中作業 (Pomodoro)** をサポートするアプリケーションです。  
