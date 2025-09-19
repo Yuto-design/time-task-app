@@ -86,3 +86,12 @@ docker compose up -d
 
 ---
 
+## ページ一覧
+- `/index.php`  
+  トップページ
+- `/todo.php`  
+  ToDoリスト管理（追加・表示・編集・削除）
+- `/habits.php`  
+  習慣トラッカー（習慣登録・進捗確認・達成率表示）
+- `/pomodoro.php`  
+  ポモドーロタイマー（集中タイマー、過去の記録）
