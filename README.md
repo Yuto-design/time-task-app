@@ -30,7 +30,15 @@ PHP + MySQLを用いて構築されており、タスクや習慣の記録・進
 
 ---
 
-
+## 使用技術
+- **フロントエンド**
+  - HTML / CSS / JavaScript
+  - [Chart.js](https://www.chartjs.org/) を使用してグラフ描画
+- **バックエンド**
+  - PHP
+  - PDO を用いたデータベース操作
+- **データベース**
+  - MySQL
 
 ---
 
